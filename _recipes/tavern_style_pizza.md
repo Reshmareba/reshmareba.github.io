@@ -1,4 +1,5 @@
 ---
+layout: recipe
 title: "Tavern-Style Pizza with Hot Honey"
 subtitle: "Thin, crispy tavern-style today... Fluffy Sicilian slab next time"
 image: tavern_style_pizza.jpg
