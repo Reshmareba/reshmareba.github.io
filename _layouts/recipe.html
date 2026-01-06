@@ -1,10 +1,10 @@
-
 ---
 layout: default
 ---
 
 <div class="grid grid-cols-1 md:grid-cols-2 w-full" itemscope itemtype="http://schema.org/Recipe">
   
+
   <div class="image bg-gray-200 relative aspect-video md:aspect-auto md:h-full">
 
     <a href="/" class="back bg-white rounded-full block absolute top-6 md:top-10 left-6 md:left-10 p-4 md:p-6 z-10">
@@ -16,9 +16,11 @@ layout: default
     
     <!-- call up the image and image credit link -->
     {% for image in page.image %}
+
       <canvas class="view w-full h-full bg-cover bg-center"
         style="background-image:url({{ site.baseurl }}/images/{{ image }});">
       </canvas>
+
 
       {% if page.imagecredit %}
         {% for imagecredit in page.imagecredit %}
@@ -32,136 +34,127 @@ layout: default
 
   </div>
 
-  <article class="post-content p-8 md:p-12 flex flex-col gap-12 h-full md:overflow-scroll mb-24" style="background: linear-gradient(to bottom, #BBDED6 0%, #BBDED6 50%, white 50%, white 100%);">
+  <article class="post-content p-8 md:p-12 flex flex-col gap-12 h-full md:overflow-scroll mb-24" style="background: linear-gradient(to bottom, #BBDED6 0%, #BBDED6 50%, white 50%, white 
+100%) !important;">
 
+<!-- call up the main recipe title and content -->
+  <header class="recipe-header flex flex-col gap-6 md:pt-16">
+    <h1 class="recipe-title font-gelica text-primary text-left text-5xl lg:text-7xl font-bold" itemprop="name">{{ page.title }}</h1>
 
-    <!-- Show image in content area on mobile -->
-    {% if page.image %}
-    <div class="md:hidden -mx-8 -mt-8 mb-4">
-      {% for image in page.image %}
-        <img src="{{ site.baseurl }}/images/{{ image }}" alt="{{ page.title }}" class="w-full aspect-video object-cover">
+    <div class="tags flex gap-2">
+      {% for tag in page.tags %}
+        <a href="{{ site.baseurl }}/search?tag={{ tag }}" class="tag py-1 px-3 bg-red-200 rounded-lg text-red-900 hover:scale-110 hover:rotate-2 transition hover:bg-primary 
+hover:text-white">
+          {{ tag | strip }}
+        </a>
       {% endfor %}
     </div>
-    {% endif %}
 
-    <!-- call up the main recipe title and content -->
-    <header class="recipe-header flex flex-col gap-6 md:pt-16">
-      <h1 class="recipe-title font-gelica text-primary text-left text-5xl lg:text-7xl font-bold" itemprop="name">{{ page.title }}</h1>
-
-      <div class="tags flex gap-2">
-        {% for tag in page.tags %}
-          <a href="{{ site.baseurl }}/search?tag={{ tag }}" class="tag py-1 px-3 bg-red-200 rounded-lg text-red-900 hover:scale-110 hover:rotate-2 transition hover:bg-primary 
-hover:text-white">
-            {{ tag | strip }}
-          </a>
-        {% endfor %}
-      </div>
-
-      <div class="text-left text-lg leading-loose [&>*]:mb-6 [&_a]:underline [&_a]:decoration-[3px] [&_a]:decoration-primary [&_a]:underline-offset-2" 
+    <div class="text-left text-lg leading-loose [&>*]:mb-6 [&_a]:underline [&_a]:decoration-[3px] [&_a]:decoration-primary [&_a]:underline-offset-2" 
 itemprop="description">{{page.content}}</div>
 
-    </header>
+  </header>
 
-    {% if page.nutrition %}
-    <div class="nutrition">
-        {% include nutritional-information.html %}
-    </div>
-    {% endif %}
+  {% if page.nutrition %}
+  <div class="nutrition">
+      {% include nutritional-information.html %}
+  </div>
+  {% endif %}
 
-    <!-- call up recipe and directions -->
+  <!-- call up recipe and directions -->
+  <div class="">
+
     <div class="">
-
-      <div class="">
-        <!-- check if it's a component-based recipe -->
-        {% if page.components %}
-        <h4 class="uppercase text-primary font-semibold mb-2">{{ site.translation[site.language].components }}</h4>
-        <ul class="flex flex-col gap-2 mb-8">
-          <!-- list components that make up recipe -->
-          {% for component in page.components %}
-          <li class="flex items-start gap-3">{{ component | markdownify }}</li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-
-        {% if page.ingredients %}
-        <h2 class="uppercase text-primary font-semibold mb-2">{{ site.translation[site.language].ingredients }}</h2>
-        <ul itemprop="ingredients" class="flex flex-col gap-2 mb-8">
-          <!-- list ingredients that make up recipe -->
-          {% for ingredient in page.ingredients %}
-          <li itemprop="recipeIngredient" class="flex items-start gap-3 text-lg leading-loose">{{ ingredient | markdownify }}</li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-
-      </div>
-
-      <div class="sm-col sm-col-6 lg-col-6">
-        <h2 class="uppercase text-primary font-semibold mb-2">{{ site.translation[site.language].directions }}</h2>
-        <ul itemprop="recipeInstructions" class="flex flex-col gap-3 mb-8">
-          {% for direction in page.directions %}
-          <li class="flex gap-3 items-start text-lg leading-loose">{{ direction | markdownify }}</li>
-          {% endfor %}
-        </ul>
-      </div>
-
-    </div>
-    <!-- end recipe and directions -->
-
-    <!-- check if it's a component-based recipe, render it -->
-    {% if page.components %}
-
-    <div class="components">
-      &darr; {{ site.translation[site.language].component_based }} &darr;
-    </div>
-
-    <div class="clearfix mxn2">
-    {% for component in page.components %}
-      <div class="sm-col sm-col-4 px2">
-      {% for recipe in site.components %}
-      {% if recipe.title == component %}
-        <h4 class="font-gelica text-3xl mb-8 mt-16">{{recipe.title}}</h4>
-
-        {% for image in recipe.image %}
-        <div class="image ratio bg-cover relative mb-8" style="background-image:url({{site.baseurl}}/images/{{ image }});">
-          <img class="hide" itemprop="photo" src="{{site.baseurl}}/images/{{ image }}" />
-          {% if recipe.imagecredit %}
-            {% for imagecredit in recipe.imagecredit %}
-              <a href="{{ imagecredit }}" class="absolute bottom-3 right-3 p-3 bg-white bg-opacity-50 rounded-lg">
-                <svg class="js-geomicon geomicon" width="14" height="14" data-icon="camera" viewBox="0 0 32 32" style="fill:currentcolor"><title>camera icon</title><path d="M0 6 L8 6 L10 2 
-L22 2 L24 6 L32 6 L32 28 L0 28 z M9 17 A7 7 0 0 0 23 17 A7 7 0 0 0 9 17"></path></svg>
-              </a>
-            {% endfor %}
-          {% endif %}
-        </div>
-          
+      <!-- check if it's a component-based recipe -->
+      {% if page.components %}
+      <h4 class="uppercase text-primary font-semibold mb-2">{{ site.translation[site.language].components }}</h4>
+      <ul class="flex flex-col gap-2 mb-8">
+        <!-- list components that make up recipe -->
+        {% for component in page.components %}
+        <li class="flex items-start gap-3">{{ component | markdownify }}</li>
         {% endfor %}
-
-        <h2 class="uppercase text-primary font-semibold mb-2">{{ site.translation[site.language].ingredients }}</h2>
-          <ul class="ingredients flex flex-col gap-3 mb-8" itemprop="ingredients">
-          {% for item in recipe.ingredients %}
-          <li itemprop="ingredient" class="flex gap-3 items-start">{{ item | markdownify }}</li>
-          {% endfor %}
-        </ul>
-
-        <h2 class="uppercase text-primary font-semibold mb-2">{{ site.translation[site.language].directions }}</h2>
-          <ul itemprop="instructions" class="flex flex-col gap-3 mb-8">
-          {% for item in recipe.directions %}
-          <li class="flex gap-3 items-start">{{ item | markdownify }}</li>
-          {% endfor %}
-        </ul>
-
+      </ul>
       {% endif %}
-      {% endfor %}
-      </div>
-    {% endfor %}
+
+      {% if page.ingredients %}
+      <h2 class="uppercase text-primary font-semibold mb-2">{{ site.translation[site.language].ingredients }}</h2>
+      <ul itemprop="ingredients" class="flex flex-col gap-2 mb-8">
+        <!-- list ingredients that make up recipe -->
+        {% for ingredient in page.ingredients %}
+        <li itemprop="recipeIngredient" class="flex items-start gap-3 text-lg leading-loose">{{ ingredient | markdownify }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
     </div>
+
+    <div class="sm-col sm-col-6 lg-col-6">
+      <h2 class="uppercase text-primary font-semibold mb-2">{{ site.translation[site.language].directions }}</h2>
+      <ul itemprop="recipeInstructions" class="flex flex-col gap-3 mb-8">
+        {% for direction in page.directions %}
+        <li class="flex gap-3 items-start text-lg leading-loose">{{ direction | markdownify }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+  </div>
+<!-- end recipe and directions -->
+
+<!-- check if it's a component-based recipe, render it -->
+  {% if page.components %}
+
+  <div class="components">
+    &darr; {{ site.translation[site.language].component_based }} &darr;
+  </div>
+
+  <div class="clearfix mxn2">
+  {% for component in page.components %}
+    <div class="sm-col sm-col-4 px2">
+    {% for recipe in site.components %}
+    {% if recipe.title == component %}
+      <h4 class="font-gelica text-3xl mb-8 mt-16">{{recipe.title}}</h4>
+
+      {% for image in recipe.image %}
+      <div class="image ratio bg-cover relative mb-8" style="background-image:url({{site.baseurl}}/images/{{ image }});">
+        <img class="hide" itemprop="photo" src="{{site.baseurl}}/images/{{ image }}" />
+        {% if recipe.imagecredit %}
+          {% for imagecredit in recipe.imagecredit %}
+            <a href="{{ imagecredit }}" class="absolute bottom-3 right-3 p-3 bg-white bg-opacity-50 rounded-lg">
+              <svg class="js-geomicon geomicon" width="14" height="14" data-icon="camera" viewBox="0 0 32 32" style="fill:currentcolor"><title>camera icon</title><path d="M0 6 L8 6 L10 2 
+L22 2 L24 6 L32 6 L32 28 L0 28 z M9 17 A7 7 0 0 0 23 17 A7 7 0 0 0 9 17"></path></svg>
+            </a>
+          {% endfor %}
+        {% endif %}
+      </div>
+        
+      {% endfor %}
+
+      <h2 class="uppercase text-primary font-semibold mb-2">{{ site.translation[site.language].ingredients }}</h2>
+        <ul class="ingredients flex flex-col gap-3 mb-8" itemprop="ingredients">
+        {% for item in recipe.ingredients %}
+        <li itemprop="ingredient" class="flex gap-3 items-start">{{ item | markdownify }}</li>
+        {% endfor %}
+      </ul>
+
+      <h2 class="uppercase text-primary font-semibold mb-2">{{ site.translation[site.language].directions }}</h2>
+        <ul itemprop="instructions" class="flex flex-col gap-3 mb-8">
+        {% for item in recipe.directions %}
+        <li class="flex gap-3 items-start">{{ item | markdownify }}</li>
+        {% endfor %}
+      </ul>
 
     {% endif %}
-    <!-- end components -->
-
-    {% for category in page.categories %}
-      <p class="clearfix">{{ site.translation[site.language].category }}: <span itemprop="recipeCategory">{{ category }}</span></p>
     {% endfor %}
+    </div>
+  {% endfor %}
+  </div>
+
+  {% endif %}
+<!-- end components -->
+
+  {% for category in page.categories %}
+    <p class="clearfix">{{ site.translation[site.language].category }}: <span itemprop="recipeCategory">{{ category }}</span></p>
+  {% endfor %}
 
   </article>
 
@@ -170,6 +163,7 @@ L22 2 L24 6 L32 6 L32 28 L0 28 z M9 17 A7 7 0 0 0 23 17 A7 7 0 0 0 9 17"></path>
 <script type="text/javascript">
   document.addEventListener("DOMContentLoaded", function() {
 
+  // Define clickToggle function in vanilla JavaScript
   function clickToggle(element, func1, func2) {
     let toggleState = false;
     element.addEventListener("click", function() {
@@ -182,16 +176,21 @@ L22 2 L24 6 L32 6 L32 28 L0 28 z M9 17 A7 7 0 0 0 23 17 A7 7 0 0 0 9 17"></path>
     });
   }
 
+  // Select the overflow container
   const container = document.querySelector(".post-content");
 
+  // Select all list items in the unordered list
   document.querySelectorAll("ul li").forEach(function(li) {
+    // Append a checkbox input to each list item
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.classList.add("mt-2.5");
 
     li.insertBefore(checkbox, li.firstChild);
 
+    // Apply clickToggle function to each list item
     clickToggle(li, function() {
+      // First function: Check the checkbox and scroll down within the container
       this.querySelector("input").checked = true;
       const height = this.offsetHeight;
       const y = container.scrollTop;
@@ -200,6 +199,7 @@ L22 2 L24 6 L32 6 L32 28 L0 28 z M9 17 A7 7 0 0 0 23 17 A7 7 0 0 0 9 17"></path>
         behavior: "smooth"
       });
     }, function() {
+      // Second function: Uncheck the checkbox and scroll up within the container
       this.querySelector("input").checked = false;
       const height = this.offsetHeight;
       const y = container.scrollTop;
@@ -211,5 +211,7 @@ L22 2 L24 6 L32 6 L32 28 L0 28 z M9 17 A7 7 0 0 0 23 17 A7 7 0 0 0 9 17"></path>
   });
 
 });
+
+
 </script>
 
