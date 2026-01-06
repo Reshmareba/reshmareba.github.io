@@ -1,4 +1,5 @@
 ---
+layout: recipe
 title: "Velvet Sunset"
 subtitle: "Layers of sunshine and blueberry skies"
 image: velvet_sunset_dessert.jpg
