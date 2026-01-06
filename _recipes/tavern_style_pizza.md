@@ -1,6 +1,7 @@
 ---
 title: "Tavern-Style Pizza with Hot Honey"
 subtitle: "Thin, crispy tavern-style today... Fluffy Sicilian slab next time"
+image: tavern_style_pizza.jpg
 tags: [pizza, fermented-dough, tavern-style, sicilian, hot-honey]
 difficulty: intermediate
 time_range: "30 min active + 24-48 hrs cold ferment OR 2 hrs quick rise"
