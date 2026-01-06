@@ -1,8 +1,8 @@
 # Site settings
-title: Chowdown
-email: your-email@domain.com
+title: RecipeLab
+email: reshmareba1@gmail.com
 description: The plain text recipe database for hackers
-baseurl: "https://chowdown.io"
+baseurl: "https://reshmareba.github.io"
 language: "en"
 lang_direction: "ltr"
 color: "#F53200"
